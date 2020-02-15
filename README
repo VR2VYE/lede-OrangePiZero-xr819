@@ -1,4 +1,4 @@
-﻿Welcome to Lean's  git source of OpenWrt and packages
+Welcome to Lean's  git source of OpenWrt and packages
 
 中文：如何编译自己需要的 OpenWrt 固件
 
@@ -60,3 +60,45 @@ Note: Addition Lean's private package source code in ./package/lean directory. U
 
 GPLv3 is compatible with more licenses than GPLv2: it allows you to make combinations with code that has specific kinds of additional requirements that are not in GPLv3 itself. Section 7 has more information about this, including the list of additional requirements that are permitted.
 
+
+以下来自chainsx的编辑：
+对于Orangepi会出现的问题和解决方法：
+
+* wan口不能默认dhcp，建议新增接口lan来作为无线的dhcp服务器，将wan口设为dhcp
+
+在第一次上电开机后改/etc/config/network
+```
+config interface 'loopback'
+        option ifname 'lo'
+        option proto 'static'
+        option ipaddr '127.0.0.1'
+        option netmask '255.0.0.0'
+
+config globals 'globals'
+        option ula_prefix 'fd98:a9fe:0dbe::/48'
+
+config interface 'lan'
+        option type 'bridge'
+        option ifname 'wlan0'
+        option proto 'static'
+        option ipaddr '192.168.4.1'
+        option netmask '255.255.255.0'
+        option ip6assign '60'
+
+config interface 'wan'
+        option ifname 'eth0'
+        option proto 'dhcp'
+
+config interface 'vpn0'
+        option ifname 'tun0'
+        option proto 'none'
+```
+
+* 热点不会默认开放，ap默认不能使用，需要将工作频率-模式改为传统
+
+改/etc/config/wirless，删掉以下行
+```
+option htmode 'HT20'
+```
+
+lean开源不易，请大家珍惜。

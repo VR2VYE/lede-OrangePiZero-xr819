@@ -1,0 +1,48 @@
+From: Semen Kreyda <aswerklon@gmail.com>
+Date: Jul 14 2019 21:57:59
+Subject: [PATCH] ARM: dts: sunxi: H2+: enable in boot soc-audio, usb2, usb3, SPI NOR on Orange Pi Zero boards
+---
+
+
+--- a/arch/arm/boot/dts/sun8i-h2-plus-orangepi-zero.dts
++++ b/arch/arm/boot/dts/sun8i-h2-plus-orangepi-zero.dts
+@@ -124,6 +160,14 @@
+ &ehci1 {
+ 	status = "okay";
+ };
++
++&ehci2 {
++	status = "okay";
++};
++
++&ehci3 {
++	status = "okay";
++};
+ 
+ &emac {
+ 	phy-handle = <&int_mii_phy>;
+@@ -162,10 +190,23 @@
+ &ohci1 {
+ 	status = "okay";
+ };
++
++&ohci2 {
++	status = "okay";
++};
++
++&ohci3 {
++	status = "okay";
++};
++
++&codec {
++	allwinner,audio-routing = "Line Out", "LINEOUT", "MIC1", "Mic", "Mic", "MBIAS";
++	status = "okay";
++};
+ 
+ &spi0 {
+ 	/* Disable SPI NOR by default: it optional on Orange Pi Zero boards */
+-	status = "disabled";
++	status = "okay";
+ 
+ 	flash@0 {
+ 		#address-cells = <1>;
